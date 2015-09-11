@@ -8,5 +8,5 @@ Daniel Lee
 
 void main()
 {
-
+cout<<"Hello\n";
 }
