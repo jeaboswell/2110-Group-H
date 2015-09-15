@@ -12,7 +12,7 @@ using namespace std;
 #pragma endregion Add all other includes to functions.h
 
 // Try to do as much as possible in functions
-void main()
+int main()
 {
 	#pragma region Variables
 	int promptChoice = 0;
@@ -46,4 +46,5 @@ void main()
 	}
 	cout<< "Hello" << endl;
 	KEYPRESS
+	return 0;
 } 

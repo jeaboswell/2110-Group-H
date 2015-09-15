@@ -9,13 +9,13 @@
 #include <list>
 using namespace std;
 
-#ifdef _WIN32
+#ifdef _WIN32 // Windows compatibility
 #include <Windows.h>
 #include <conio.h>
 #define CLEAR system("cls"); // Clear the comand prompt (screen)
 #define SLEEP Sleep(1000); // Make program pause for one second before continuing
 #define KEYPRESS cout << "Press any key to continue..."; _getch(); // "Press any key to continue..."
-#elif __linux
+#elif __linux // Linux compatibility
 #include <ncurses.h>
 #define CLEAR system("clear"); // Clear the comand prompt (screen)
 #define SLEEP sleep(1); // Make program pause for one second before continuing
