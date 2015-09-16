@@ -4,7 +4,6 @@
 #include <iomanip>
 #include <string>
 #include <cstdlib>
-#include <map>
 #include <vector>
 #include <list>
 using namespace std;
@@ -23,10 +22,31 @@ using namespace std;
 #endif
 #pragma endregion
 
-#pragma region Classes
-
+#pragma region Types
+enum flow
+{
+	oneWay,
+	twoWay
+};
 #pragma endregion
 
-#pragma region Function Prototypes
+#pragma region Classes
+class Node
+{
+public:
+	string name;
+	double value;
+};
+class Edge
+{
+public:
+	Node* start;
+	Node* end;
+	double length;
+	flow direction;
+};
+#pragma endregion
+
+#pragma region Function Declarations
 int prompt();
 #pragma endregion 
