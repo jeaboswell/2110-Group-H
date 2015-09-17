@@ -6,16 +6,18 @@ Daniel Lee
 
 */
 
-#pragma region Includes
+#pragma region Includes/Globals
 #include "functions.h"
 using namespace std;
-#pragma endregion Add all other includes to functions.h
+
+vector<Node> Nodes;
+vector<Edge> Edges;
+#pragma endregion
 
 // Try to do as much as possible in functions
 int main()
 {
 	#pragma region Variables
-	int promptChoice = 0;
 	bool quit = false;
 	#pragma endregion
 
@@ -23,28 +25,14 @@ int main()
 
 	while (quit == false)
 	{
-		promptChoice = prompt();
-
-		// Execute command from prompt (This may move to it's own function later). It is just a template right now.
-		switch (promptChoice)
-		{
-			case 1: // Choice 1
-			{
-				break;
-			}
-			case 2: // Choice 2
-			{
-				
-				break;
-			}
-			default:
-			{
-				quit = true;
-				break;
-			}
-		}
+		quit = prompt();
 	}
-	cout<< "Hello" << endl;
-	KEYPRESS
 	return 0;
 } 
+
+/*
+For printing all items in vector
+
+for(auto& s: tokens)
+std::cout << '"' << s << '"' << '\n';
+*/

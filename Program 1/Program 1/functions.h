@@ -1,5 +1,5 @@
 #pragma once
-#pragma region Includes
+#pragma region Includes/Defines
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -7,6 +7,8 @@
 #include <vector>
 #include <list>
 using namespace std;
+
+#define NEWLINE cout << endl;
 
 #ifdef _WIN32 // Windows compatibility
 #include <Windows.h>
@@ -48,5 +50,6 @@ public:
 #pragma endregion
 
 #pragma region Function Declarations
-int prompt();
+bool prompt();
+vector<string> split(string);
 #pragma endregion 
