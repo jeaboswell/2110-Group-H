@@ -5,7 +5,7 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
-#include <list>
+#include <locale>
 using namespace std;
 
 #define NEWLINE cout << endl;
@@ -24,14 +24,6 @@ using namespace std;
 #endif
 #pragma endregion
 
-#pragma region Types
-enum flow
-{
-	oneWay,
-	twoWay
-};
-#pragma endregion
-
 #pragma region Classes
 class Node
 {
@@ -45,7 +37,6 @@ public:
 	Node* start;
 	Node* end;
 	double length;
-	flow direction;
 };
 #pragma endregion
 
