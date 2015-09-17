@@ -33,6 +33,6 @@ int main()
 /*
 For printing all items in vector
 
-for(auto& s: tokens)
-std::cout << '"' << s << '"' << '\n';
+for(auto& temp: vector)
+std::cout << '"' << temp << '"' << '\n';
 */
