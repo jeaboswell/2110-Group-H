@@ -9,15 +9,36 @@ extern vector<Edge> Edges;
 locale loc;
 #pragma endregion
 
-bool prompt()
+string prompt()
 {
-	bool check, quit = false;
 	string commandLine;
-	vector<string> splitCommands;
 
 	cout << "cmd> " << flush;
 	getline(cin, commandLine);
-	splitCommands = split(commandLine);
+	
+	return commandLine;
+}
+
+#pragma region Command Handling
+vector<string> split(string input)
+{
+	string temp;
+	for (int i = 0; i < input.length(); i++) // Convert input into all lower case
+		temp += toupper(input[i], loc);
+	istringstream buf(temp);
+	istream_iterator<string> beg(buf), end;
+
+	vector<string> output(beg, end);
+
+	return output;
+}
+
+bool runCommand(string command)
+{
+	bool quit = false;
+	vector<string> splitCommands;
+
+	splitCommands = split(command);
 
 	#pragma region No Input Error Check
 	if (splitCommands.empty() == true)
@@ -138,7 +159,7 @@ bool prompt()
 		CLEAR
 	}
 	#pragma endregion
-	
+
 	#pragma region Error Check First Command
 	else
 	{
@@ -149,16 +170,4 @@ bool prompt()
 
 	return quit;
 }
-
-vector<string> split(string input)
-{
-	string temp;
-	for (int i = 0; i < input.length(); i++) // Convert input into all lower case
-		temp += toupper(input[i], loc);
-	istringstream buf(temp);
-	istream_iterator<string> beg(buf), end;
-
-	vector<string> output(beg, end);
-
-	return output;
-}
+#pragma endregion

@@ -19,20 +19,15 @@ int main()
 {
 	#pragma region Variables
 	bool quit = false;
+	string command;
 	#pragma endregion
 
 	CLEAR
 
 	while (quit == false)
 	{
-		quit = prompt();
+		command = prompt();
+		quit = runCommand(command);
 	}
 	return 0;
 } 
-
-/*
-For printing all items in vector
-
-for(auto& temp: vector)
-std::cout << '"' << temp << '"' << '\n';
-*/

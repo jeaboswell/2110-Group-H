@@ -41,6 +41,7 @@ public:
 #pragma endregion
 
 #pragma region Function Declarations
-bool prompt();
+string prompt();
 vector<string> split(string);
+bool runCommand(string);
 #pragma endregion 
