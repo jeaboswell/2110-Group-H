@@ -45,4 +45,8 @@ string prompt();
 vector<string> split(string);
 string getPath(string);
 bool runCommand(string);
+bool fileExists(string);
+bool verifyExtension(string);
+string getExtension(string);
+void parseFile(string);
 #pragma endregion 

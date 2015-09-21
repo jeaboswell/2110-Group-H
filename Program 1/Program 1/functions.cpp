@@ -10,21 +10,21 @@ extern vector<Edge> Edges;
 locale loc;
 #pragma endregion
 
+#pragma region Command Handling
 string prompt()
 {
 	string commandLine;
 
 	cout << "cmd> " << flush;
 	getline(cin, commandLine);
-	
+
 	return commandLine;
 }
 
-#pragma region Command Handling
 vector<string> split(string input)
 {
 	string temp;
-	for (int i = 0; i < input.length(); i++) // Convert input into all lower case
+	for (int i = 0; i < input.length(); i++) // Convert input into all upper case
 		temp += toupper(input[i], loc);
 	istringstream buf(temp);
 	istream_iterator<string> beg(buf), end;
@@ -230,9 +230,48 @@ bool fileExists(string fileName)
 	}
 }
 
+bool verifyExtension(string filename)
+{
+	int period;
+
+	for (int i = 0; i < filename.length(); i++)
+	{
+		if (filename[i] == '.')
+			period = i;
+	}
+
+	string extension;
+
+	for (int i = period; i < filename.length(); i++)
+		extension += filename[i];
+
+	if (extension == ".csv")
+		return true;
+	else
+		return false;
+}
+
+string getExtension(string filename)
+{
+	int period;
+
+	for (int i = 0; i < filename.length(); i++)
+	{
+		if (filename[i] == '.')
+			period = i;
+	}
+
+	string extension;
+
+	for (int i = period; i < filename.length(); i++)
+		extension += filename[i];
+
+	return extension;
+}
+
 void parseFile(string fileName)
 {
-	if (fileExists(fileName))
+	if (fileExists(fileName) && verifyExtension(fileName))
 	{
 		int loop = 0;
 		ifstream file;
@@ -251,14 +290,21 @@ void parseFile(string fileName)
 					temp += " ";
 			}
 
-			cout << "cmd> " << temp << endl;
-			runCommand(temp);
+			if (temp != "\0")
+			{
+				cout << "file cmd> " << temp << endl;
+				runCommand(temp);
+			}
 		}
 		file.close();
 	}
-	else
+	else if (!fileExists(fileName))
 	{
 		cout << "\a*** ERROR *** FILE NOT FOUND: " << fileName << endl;
+		if (!verifyExtension(fileName))
+			cout << "              CHECK FILE EXTENSION" << endl;
 	}
+	else if (!verifyExtension(fileName))
+		cout << "\a*** ERROR *** INCORRECT FILE EXTENSION: " << getExtension(fileName) << endl;
 }
 #pragma endregion
