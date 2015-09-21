@@ -1,6 +1,7 @@
 #pragma region Includes/Globals
 #include "functions.h"
 #include <sstream>
+#include <fstream>
 #include <iterator>
 using namespace std;
 
@@ -33,11 +34,26 @@ vector<string> split(string input)
 	return output;
 }
 
+string getPath(string input)
+{
+	istringstream buf(input);
+	istream_iterator<string> beg(buf), end;
+
+	vector<string> output(beg, end);
+
+	if (output.size() > 1)
+		return output.at(1);
+	else
+		return "NULL";
+}
+
 bool runCommand(string command)
 {
 	bool quit = false;
+	string filePath;
 	vector<string> splitCommands;
 
+	filePath = getPath(command);
 	splitCommands = split(command);
 
 	#pragma region No Input Error Check
@@ -51,24 +67,29 @@ bool runCommand(string command)
 	#pragma region Node Handling
 	else if (splitCommands.front() == "NODE")
 	{
-		if (splitCommands.size() != 3)
+		if (splitCommands.size() < 3) // Make sure parameters are met
 		{
 			cout << "\a*** ERROR *** MISSING PARAMETERS" << endl;
 			NEWLINE
 		}
+		else if (splitCommands.size() > 3)
+		{
+			cout << "\a*** ERROR *** TOO MANY PARAMETERS" << endl;
+			NEWLINE
+		}
 		else if (splitCommands.at(1) == "ADD") // Add node
 		{
-			cout << "Add Node" << endl;
+			// Add error checking and function call to add node
 			NEWLINE
 		}
 		else if (splitCommands.at(1) == "DELETE") // Delete node
 		{
-			cout << "Delete Node" << endl;
+			// Add error checking and function call to delete node
 			NEWLINE
 		}
 		else if (splitCommands.at(1) == "SEARCH") // Search for node
 		{
-			cout << "Search Node" << endl;
+			// Add function call to search for node
 			NEWLINE
 		}
 		else // Error handling
@@ -82,19 +103,24 @@ bool runCommand(string command)
 	#pragma region Edge Handling
 	else if (splitCommands.front() == "EDGE")
 	{
-		if (splitCommands.size() != 4)
+		if (splitCommands.size() < 4) // Make sure parameters are met
 		{
 			cout << "\a*** ERROR *** MISSING PARAMETERS" << endl;
 			NEWLINE
 		}
+		else if (splitCommands.size() > 4)
+		{
+			cout << "\a*** ERROR *** TOO MANY PARAMETERS" << endl;
+			NEWLINE
+		}
 		else if (splitCommands.at(1) == "ADD") // Add edge
 		{
-			cout << "Add Edge" << endl;
+			// Add error checking and function call to add edge
 			NEWLINE
 		}
 		else if (splitCommands.at(1) == "DELETE") // Delete edge
 		{
-			cout << "Delete Edge" << endl;
+			// Add error checking and function call to delete node
 			NEWLINE
 		}
 		else // Error handling
@@ -108,19 +134,29 @@ bool runCommand(string command)
 	#pragma region Print Handling
 	else if (splitCommands.front() == "PRINT")
 	{
-		if (splitCommands.size() != 2)
+		if (splitCommands.size() < 2) // Make sure parameters are met
 		{
 			cout << "\a*** ERROR *** MISSING PARAMETERS" << endl;
 			NEWLINE
 		}
+		else if (splitCommands.size() > 2)
+		{
+			cout << "\a*** ERROR *** TOO MANY PARAMETERS" << endl;
+			NEWLINE
+		}
+		else if (Nodes.empty()) // Make sure there is at least one node
+		{
+			cout << "\a*** ERROR *** NO NODES FOUND" << endl;
+			NEWLINE
+		}
 		else if (splitCommands.at(1) == "MATRIX") // Print Matrix
 		{
-			cout << "Print Matrix" << endl;
+			// Add function call to print matrix
 			NEWLINE
 		}
 		else if (splitCommands.at(1) == "LIST") // Print list
 		{
-			cout << "Print List" << endl;
+			// Add function call to print list
 			NEWLINE
 		}
 		else // Error handling
@@ -134,14 +170,19 @@ bool runCommand(string command)
 	#pragma region CSV File Handling
 	else if (splitCommands.front() == "FILE")
 	{
-		if (splitCommands.size() != 2)
+		if (splitCommands.size() < 2) // Make sure parameters are met
 		{
 			cout << "\a*** ERROR *** MISSING PARAMETERS" << endl;
 			NEWLINE
 		}
+		else if (splitCommands.size() > 2)
+		{
+			cout << "\a*** ERROR *** TOO MANY PARAMETERS" << endl;
+			NEWLINE
+		}
 		else // Execute commands from CSV file
 		{
-			cout << "Parse File" << endl;
+			parseFile(filePath);
 			NEWLINE
 		}
 	}
@@ -169,5 +210,55 @@ bool runCommand(string command)
 	#pragma endregion
 
 	return quit;
+}
+#pragma endregion
+
+#pragma region File Functions
+bool fileExists(string fileName)
+{
+	ifstream test;
+	test.open(fileName.c_str());
+	if (test.fail())
+	{
+		test.close();
+		return false;
+	}
+	else
+	{
+		test.close();
+		return true;
+	}
+}
+
+void parseFile(string fileName)
+{
+	if (fileExists(fileName))
+	{
+		int loop = 0;
+		ifstream file;
+		file.open(fileName.c_str());
+		string passCommand;
+		while (file.good())
+		{
+			string temp;
+
+			getline(file, passCommand, '\n');
+			for (int i = 0; i < passCommand.length(); i++)
+			{
+				if (passCommand[i] != ',')
+					temp += passCommand[i];
+				else
+					temp += " ";
+			}
+
+			cout << "cmd> " << temp << endl;
+			runCommand(temp);
+		}
+		file.close();
+	}
+	else
+	{
+		cout << "\a*** ERROR *** FILE NOT FOUND: " << fileName << endl;
+	}
 }
 #pragma endregion
