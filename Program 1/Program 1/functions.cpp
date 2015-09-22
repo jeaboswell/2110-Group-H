@@ -181,10 +181,7 @@ bool runCommand(string command)
 			NEWLINE
 		}
 		else // Execute commands from CSV file
-		{
 			parseFile(filePath);
-			NEWLINE
-		}
 	}
 	#pragma endregion
 
@@ -253,7 +250,7 @@ bool verifyExtension(string filename)
 
 string getExtension(string filename)
 {
-	int period;
+	int period = 0;
 
 	for (int i = 0; i < filename.length(); i++)
 	{
@@ -277,6 +274,7 @@ void parseFile(string fileName)
 		ifstream file;
 		file.open(fileName.c_str());
 		string passCommand;
+		NEWLINE
 		while (file.good())
 		{
 			string temp;
