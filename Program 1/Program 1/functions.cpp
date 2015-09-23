@@ -260,8 +260,13 @@ string getExtension(string filename)
 
 	string extension;
 
-	for (int i = period; i < filename.length(); i++)
-		extension += filename[i];
+	if (period != 0)
+	{
+		for (unsigned int i = period; i < filename.length(); i++)
+			extension += filename[i];
+	}
+	else
+		extension = "NO FILE";
 
 	return extension;
 }
@@ -300,9 +305,21 @@ void parseFile(string fileName)
 	{
 		cout << "\a*** ERROR *** FILE NOT FOUND: " << fileName << endl;
 		if (!verifyExtension(fileName))
-			cout << "              CHECK FILE EXTENSION" << endl;
+		{
+			if (getExtension(fileName) != "NO FILE")
+				cout << "              CHECK FILE EXTENSION" << endl;
+			else
+				cout << "              NO FILE IN PATH" << endl;
+		}
+		NEWLINE
 	}
 	else if (!verifyExtension(fileName))
-		cout << "\a*** ERROR *** INCORRECT FILE EXTENSION: " << getExtension(fileName) << endl;
+	{
+		if (getExtension(fileName) != "NO FILE")
+			cout << "\a*** ERROR *** INCORRECT FILE EXTENSION: " << getExtension(fileName) << endl;
+		else
+			cout << "\a*** ERROR *** NO FILE IN PATH: " << fileName << endl;
+		NEWLINE
+	}
 }
 #pragma endregion
