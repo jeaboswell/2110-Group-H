@@ -1,1 +1,24 @@
 Okay, feel free to edit the .cpp and .h files. Just please don't edit any of the .proj, .sln, etc.
+
+Add your own comments and change the comment at the top of the main.cpp file to have only your name.
+  
+So, download the two .cpp and one .h files from 2110-Group-H/Program 1/Program 1. You can remove any of the following things as you see fit:
+  Anything that starts with #pragma (Basically all of the regions and the once in the header)
+  
+  This is code from the header file that can be removed: (If it has XREMOVEX in front of it you can remove it)
+    XREMOVEX#ifdef _WIN32 // Windows compatibility
+    XREMOVEX#include <Windows.h>
+    XREMOVEX#include <conio.h>
+    XREMOVEX#define CLEAR system("cls"); // Clear the comand prompt (screen)
+    XREMOVEX#define SLEEP Sleep(1000); // Make program pause for one second before continuing
+    XREMOVEX#define KEYPRESS cout << "Press any key to continue..."; _getch(); // "Press any key to continue..."
+    XREMOVEX#elif __linux // Linux compatibility
+    XREMOVEX#include <ncurses.h>
+    
+    #define CLEAR system("clear"); // Clear the comand prompt (screen)
+    
+    XREMOVEX#define SLEEP sleep(1); // Make program pause for one second before continuing
+    XREMOVEX#define KEYPRESS cout << "Press any key to continue..."; cin.ignore(); // "Press any key to continue..."
+    XREMOVEX#endif
+    
+    Basically from that block the only thing that should be kept is the CLEAR define within the linux section
