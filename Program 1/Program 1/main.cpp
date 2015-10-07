@@ -3,7 +3,11 @@ CSCE 2110.001 Group H
 Jesse Boswell
 Craig Nafus
 Daniel Lee
-
+Christian Betancourt
+Taylor DeLaughter
+Nancy Joy
+Satvir Singh
+Ameera Fatima
 */
 
 #pragma region Includes/Globals
@@ -14,12 +18,11 @@ vector<Node> Nodes;
 vector<Edge> Edges;
 #pragma endregion
 
-// Try to do as much as possible in functions
 int main()
 {
 	#pragma region Variables
-	bool quit = false;
 	string command;
+	bool quit = false;
 	#pragma endregion
 
 	CLEAR
@@ -29,5 +32,7 @@ int main()
 		command = prompt();
 		quit = runCommand(command);
 	}
+
+	CLEAR
 	return 0;
 } 
