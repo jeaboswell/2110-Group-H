@@ -21,7 +21,7 @@ using namespace std;
 #include <ncurses.h>
 #define CLEAR system("clear"); // Clear the comand prompt (screen)
 #define SLEEP sleep(1); // Make program pause for one second before continuing
-#define KEYPRESS cout << "Press any key to continue..."; cin.ignore(); // "Press any key to continue..."
+#define KEYPRESS cout << "Press [Enter] to continue..."; cin.ignore(); // "Press any key to continue..."
 #define GETCH getch
 #endif
 #pragma endregion
