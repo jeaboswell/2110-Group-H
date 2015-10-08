@@ -245,9 +245,7 @@ bool runCommand(string command)
 
 	#pragma region Help Page
 	else if (splitCommands.front() == "HELP")
-	{
-
-	}
+		printHelp();
 	#pragma endregion
 
 	#pragma region Quit
@@ -567,44 +565,48 @@ void parseFile(string fileName)
 #pragma region Help Function
 void printHelp()
 {
+	Color::Modifier red(Color::FG_RED);
+	Color::Modifier green(Color::FG_GREEN);
+	Color::Modifier blue(Color::FG_BLUE);
+	Color::Modifier def(Color::FG_DEFAULT);
+
 	NEWLINE
-		cout << "Formatting help:" << endl;
+		cout << left << setw(60) << setfill('_') << "Nodes" << endl;
+		cout << blue << "Adding a node to the program:" << endl;
+		cout << green << "\tnode add <NAME>" << endl;
+		cout << blue << "Deleting a node from the program:" << endl;
+		cout << green << "\tnode delete <NAME>" << endl;
+		cout << blue << "Searching the program for an existing node:" << endl;
+		cout << green << "\tnode search <NAME>" << endl;
 	NEWLINE
-		cout << left << setw(20) << "Nodes:" << setfill('-') << endl;
-		cout << "Adding a node to the program:" << endl;
-		cout << "\tnode add <NAME>" << endl;
-		cout << "Deleting a node from the program:" << endl;
-		cout << "\tnode delete <NAME>" << endl;
-		cout << "Searching the program for an existing node:" << endl;
-		cout << "\tnode search <NAME>" << endl;
+		cout << def << left << setw(60) << "Edges" << endl;
+		cout << blue << "Adding an edge to the program:" << endl;
+		cout << green << "\tedge add <START NODE> <END NODE>" << endl;
+		cout << blue << "Deleting an edge from the program:" << endl;
+		cout << green << "\tedge delete <START NODE> <END NODE>" << endl;
 	NEWLINE
-		cout << left << setw(20) << "Edges:" << setfill('-') << endl;
-		cout << "Adding an edge to the program:" << endl;
-		cout << "\tedge add <START NODE> <END NODE>" << endl;
-		cout << "Deleting an edge from the program:" << endl;
-		cout << "\tedge delete <START NODE> <END NODE>" << endl;
+		cout << def << left << setw(60) << "Printing" << endl;
+		cout << blue << "Printing the adjacency matrix:" << endl;
+		cout << green << "\tprint matrix" << endl;
+		cout << blue << "Printing the adjacency list:" << endl;
+		cout << green << "\tprint list" << endl;
 	NEWLINE
-		cout << left << setw(17) << "Printing:" << setfill('-') << endl;
-		cout << "Printing the adjacency matrix:" << endl;
-		cout << "\tprint matrix" << endl;
-		cout << "Printing the adjacency list:" << endl;
-		cout << "\tprint list" << endl;
+		cout << def << left << setw(60) << "Command File" << endl;
+		cout << blue << "Using a .csv file to execute commands:" << endl;
+		cout << green << "\tfile <FILE PATH>" << endl;
+		cout << def << "\tNote: The file path may" << red << " NOT " << def << "contain any spaces" << endl;
 	NEWLINE
-		cout << left << setw(20) << "Command File:" << setfill('-') << endl;
-		cout << "Using a .csv file to execute commands:" << endl;
-		cout << "\tfile <FILE PATH>" << endl;
-		cout << endl << "\t\tThe file path may NOT contain any spaces" << endl;
-	NEWLINE
-		cout << left << setw(20) << "Other Commands:" << setfill('-') << endl;
-		cout << "Clear the screen:" << endl;
-		cout << "\tclear" << endl;
-		cout << "List the contents of the program folder:" << endl;
-		cout << "\tls" << endl;
-		cout << "Get a list of all commands:" << endl;
-		cout << "\thelp" << endl;
-		cout << "Exit the program:" << endl;
-		cout << "\tquit" << endl;
+		cout << left << setw(60) << "Other Commands" << endl;
+		cout << blue << "Clear the screen:" << endl;
+		cout << green << "\tclear" << endl;
+		cout << blue << "List the contents of the program folder:" << endl;
+		cout << green << "\tls" << endl;
+		cout << blue << "Get a list of all commands:" << endl;
+		cout << green << "\thelp" << endl;
+		cout << blue << "Exit the program:" << endl;
+		cout << green << "\tquit" << endl << def;
 	NEWLINE
 	KEYPRESS
+	CLEAR
 }
 #pragma endregion
