@@ -9,6 +9,11 @@ using namespace std;
 extern vector<Node> Nodes;
 extern vector<Edge> Edges;
 locale loc;
+
+Color::Modifier red(Color::FG_RED);
+Color::Modifier green(Color::FG_GREEN);
+Color::Modifier blue(Color::FG_BLUE);
+Color::Modifier def(Color::FG_DEFAULT);
 #pragma endregion
 
 #pragma region Constructors
@@ -80,7 +85,7 @@ bool runCommand(string command)
 	#pragma region No Input Error Check
 	if (splitCommands.empty() == true)
 	{
-		cout << "\a*** ERROR *** NO COMMAND ENTERED" << endl;
+		cout << red << "\a*** ERROR *** NO COMMAND ENTERED" << endl << def;
 		NEWLINE
 	}
 	#pragma endregion
@@ -90,18 +95,18 @@ bool runCommand(string command)
 	{
 		if (splitCommands.size() < 3) // Verify parameter count
 		{
-			cout << "\a*** ERROR *** MISSING PARAMETERS" << endl;
+			cout << red << "\a*** ERROR *** MISSING PARAMETERS" << endl << def;
 			NEWLINE
 		}
 		else if (splitCommands.size() > 3)
 		{
-			cout << "\a*** ERROR *** TOO MANY PARAMETERS" << endl;
+			cout << red << "\a*** ERROR *** TOO MANY PARAMETERS" << endl << def;
 			NEWLINE
 		}
 		else if (splitCommands.at(1) == "ADD") // Add node
 		{
 			if (nodeExists(splitCommands.at(2))) // Make sure node doesn't exist
-				cout << "\a*** ERROR *** DUPLICATE NODE: " << splitCommands.at(2) << endl;
+				cout << red << "\a*** ERROR *** DUPLICATE NODE: " << def << splitCommands.at(2) << endl;
 			else
 				nodeAdd(splitCommands.at(2));
 			NEWLINE
@@ -109,7 +114,7 @@ bool runCommand(string command)
 		else if (splitCommands.at(1) == "DELETE") // Delete node
 		{
 			if (!nodeExists(splitCommands.at(2))) // Make sure node exists
-				cout << "\a*** ERROR *** NODE NOT FOUND FOR DELETION: " << splitCommands.at(2) << endl;
+				cout << red << "\a*** ERROR *** NODE NOT FOUND FOR DELETION: " << def << splitCommands.at(2) << endl;
 			else
 				nodeDelete(splitCommands.at(2));
 			NEWLINE
@@ -117,14 +122,14 @@ bool runCommand(string command)
 		else if (splitCommands.at(1) == "SEARCH") // Search for node
 		{
 			if (nodeExists(splitCommands.at(2)))
-				cout << "NODE " << splitCommands.at(2) << ": FOUND" << endl;
+				cout << def << "NODE " << splitCommands.at(2) << ": " << green << "FOUND" << endl << def;
 			else
-				cout << "NODE " << splitCommands.at(2) << ": NOT FOUND" << endl;
+				cout << def << "NODE " << splitCommands.at(2) << ": " << red << "NOT FOUND" << endl << def;
 			NEWLINE
 		}
 		else // Error handling
 		{
-			cout << "\a*** ERROR *** COMMAND NOT RECOGNIZED FOR NODE: " << splitCommands.at(1) << endl;
+			cout << red << "\a*** ERROR *** COMMAND NOT RECOGNIZED FOR NODE: " << blue << splitCommands.at(1) << endl << def;
 			NEWLINE
 		}
 	}
@@ -135,27 +140,27 @@ bool runCommand(string command)
 	{
 		if (splitCommands.size() < 4) // Verify parameter count
 		{
-			cout << "\a*** ERROR *** MISSING PARAMETERS" << endl;
+			cout << red << "\a*** ERROR *** MISSING PARAMETERS" << endl << def;
 			NEWLINE
 		}
 		else if (splitCommands.size() > 4)
 		{
-			cout << "\a*** ERROR *** TOO MANY PARAMETERS" << endl;
+			cout << red << "\a*** ERROR *** TOO MANY PARAMETERS" << endl << def;
 			NEWLINE
 		}
 		else if (splitCommands.at(1) == "ADD") // Add edge
 		{
 			if (edgeExists(splitCommands.at(2), splitCommands.at(3))) // Make sure edge doesn't already exist
-				cout << "\a*** ERROR *** DUPLICATE EDGE: " << splitCommands.at(2) << "-" << splitCommands.at(3) << endl;
+				cout << red << "\a*** ERROR *** DUPLICATE EDGE: " << def << splitCommands.at(2) << "-" << splitCommands.at(3) << endl;
 			else if (!nodeExists(splitCommands.at(2)) && !nodeExists(splitCommands.at(3))) // Error if start and end nodes don't exist
 			{
-				cout << "\a*** ERROR *** NODE " << splitCommands.at(2) << ": NOT FOUND" << endl;
-				cout << "\a*** ERROR *** NODE " << splitCommands.at(3) << ": NOT FOUND" << endl;
+				cout << red << "\a*** ERROR *** NODE " << def << splitCommands.at(2) << red << ": NOT FOUND" << endl << def;
+				cout << red << "\a*** ERROR *** NODE " << def << splitCommands.at(3) << red << ": NOT FOUND" << endl << def;
 			}
 			else if (!nodeExists(splitCommands.at(2))) // Error if start node doesn't exist
-				cout << "\a*** ERROR *** NODE " << splitCommands.at(2) << ": NOT FOUND" << endl;
+				cout << red << "\a*** ERROR *** NODE " << def << splitCommands.at(2) << red << ": NOT FOUND" << endl << def;
 			else if (!nodeExists(splitCommands.at(3))) // Error if end node doesn't exist
-				cout << "\a*** ERROR *** NODE " << splitCommands.at(3) << ": NOT FOUND" << endl;
+				cout << red << "\a*** ERROR *** NODE " << def << splitCommands.at(3) << red << ": NOT FOUND" << endl << def;
 			else
 				edgeAdd(splitCommands.at(2), splitCommands.at(3));
 			NEWLINE
@@ -163,14 +168,14 @@ bool runCommand(string command)
 		else if (splitCommands.at(1) == "DELETE") // Delete edge
 		{
 			if (!edgeExists(splitCommands.at(2), splitCommands.at(3))) // Make sure edge exists
-				cout << "\a*** ERROR *** EDGE NOT FOUND FOR DELETION: " << splitCommands.at(2) << "-" << splitCommands.at(3) << endl;
+				cout << red << "\a*** ERROR *** EDGE NOT FOUND FOR DELETION: " << def << splitCommands.at(2) << "-" << splitCommands.at(3) << endl;
 			else
 				edgeDelete(splitCommands.at(2), splitCommands.at(3));
 			NEWLINE
 		}
 		else // Error handling
 		{
-			cout << "\a*** ERROR *** COMMAND NOT RECOGNIZED FOR EDGE: " << splitCommands.at(1) << endl;
+			cout << red << "\a*** ERROR *** COMMAND NOT RECOGNIZED FOR EDGE: " << blue << splitCommands.at(1) << endl << def;
 			NEWLINE
 		}
 	}
@@ -181,17 +186,17 @@ bool runCommand(string command)
 	{
 		if (splitCommands.size() < 2) // Verify parameter count
 		{
-			cout << "\a*** ERROR *** MISSING PARAMETERS" << endl;
+			cout << red << "\a*** ERROR *** MISSING PARAMETERS" << endl << def;
 			NEWLINE
 		}
 		else if (splitCommands.size() > 2)
 		{
-			cout << "\a*** ERROR *** TOO MANY PARAMETERS" << endl;
+			cout << red << "\a*** ERROR *** TOO MANY PARAMETERS" << endl << def;
 			NEWLINE
 		}
 		else if (Nodes.empty()) // Make sure there are nodes present
 		{
-			cout << "\a*** ERROR *** NO NODES FOUND" << endl;
+			cout << red << "\a*** ERROR *** NO NODES FOUND" << endl << def;
 			NEWLINE
 		}
 		else if (splitCommands.at(1) == "MATRIX") // Print Matrix
@@ -206,7 +211,7 @@ bool runCommand(string command)
 		}
 		else // Error handling
 		{
-			cout << "\a*** ERROR *** COMMAND NOT RECOGNIZED FOR PRINT: " << splitCommands.at(1) << endl;
+			cout << red << "\a*** ERROR *** COMMAND NOT RECOGNIZED FOR PRINT: " << blue << splitCommands.at(1) << endl << def;
 			NEWLINE
 		}
 	}
@@ -217,12 +222,12 @@ bool runCommand(string command)
 	{
 		if (splitCommands.size() < 2) // Verify parameter count
 		{
-			cout << "\a*** ERROR *** MISSING PARAMETERS" << endl;
+			cout << red << "\a*** ERROR *** MISSING PARAMETERS" << endl << def;
 			NEWLINE
 		}
 		else if (splitCommands.size() > 2)
 		{
-			cout << "\a*** ERROR *** TOO MANY PARAMETERS" << endl;
+			cout << red << "\a*** ERROR *** TOO MANY PARAMETERS" << endl << def;
 			NEWLINE
 		}
 		else // Execute commands from CSV file
@@ -256,7 +261,7 @@ bool runCommand(string command)
 	#pragma region Error Check First Command
 	else
 	{
-		cout << "\a*** ERROR *** COMMAND NOT RECOGNIZED: " << splitCommands.front() << endl;
+		cout << red << "\a*** ERROR *** COMMAND NOT RECOGNIZED: " << def << splitCommands.front() << endl;
 		NEWLINE
 	}
 	#pragma endregion
@@ -286,7 +291,7 @@ void nodeAdd(string name)
 	Node temp = Node(name);
 	Nodes.push_back(temp);
 
-	cout << "ADDED: NODE " << name << endl;
+	cout << green << "ADDED" << def << ": NODE " << name << endl;
 }
 
 // Delete node from Nodes vector
@@ -297,7 +302,7 @@ void nodeDelete(string name)
 		if (Nodes.at(i).name == name)
 		{
 			Nodes.erase(Nodes.begin() + i); // Delete node
-			cout << "DELETED: NODE " << name << endl;
+			cout << red << "DELETED" << def << ": NODE " << name << endl;
 			if (!Edges.empty())
 			{
 				for (unsigned int j = 0; j < Edges.size(); j++) // Look for edges containing node
@@ -306,14 +311,14 @@ void nodeDelete(string name)
 					{
 						if (Edges.at(j).start == name)
 						{
-							cout << "EDGE AUTO-REMOVED BY NODE DELETION: " << Edges.at(j).start << "-" << Edges.at(j).end << endl;
+							cout << blue << "    EDGE AUTO-REMOVED BY NODE DELETION: " << def << Edges.at(j).start << "-" << Edges.at(j).end << endl;
 							Edges.erase(Edges.begin() + j);
 						}
 						if (!Edges.empty())
 						{
 							if (Edges.at(j).end == name)
 							{
-								cout << "EDGE AUTO-REMOVED BY NODE DELETION: " << Edges.at(j).start << "-" << Edges.at(j).end << endl;
+								cout << blue << "    EDGE AUTO-REMOVED BY NODE DELETION: " << def << Edges.at(j).start << "-" << Edges.at(j).end << endl;
 								Edges.erase(Edges.begin() + j);
 								j -= 1;
 							}
@@ -321,7 +326,7 @@ void nodeDelete(string name)
 					}
 					else if (Edges.at(j).start == name) // Edge starts and ends at same node
 					{
-						cout << "EDGE AUTO-REMOVED BY NODE DELETION: " << Edges.at(j).start << "-" << Edges.at(j).end << endl;
+						cout << blue << "    EDGE AUTO-REMOVED BY NODE DELETION: " << def << Edges.at(j).start << "-" << Edges.at(j).end << endl;
 						Edges.erase(Edges.begin() + j);
 					}
 				}
@@ -351,13 +356,13 @@ void edgeAdd(string start, string end)
 {
 	Edge temp1 = Edge(start, end);
 	Edges.push_back(temp1);
-	cout << "ADDED: EDGE " << start << "-" << end << endl;
+	cout << green << "ADDED" << def << ": EDGE " << start << "-" << end << endl;
 
 	if (start.compare(end) != 0)
 	{
 		Edge temp2 = Edge(end, start);
 		Edges.push_back(temp2);
-		cout << "ADDED: EDGE " << end << "-" << start << endl;
+		cout << green << "ADDED" << def << ": EDGE " << end << "-" << start << endl;
 	}
 }
 
@@ -369,14 +374,14 @@ void edgeDelete(string start, string end)
 		if (Edges.at(i).start == start && Edges.at(i).end == end)
 		{
 			Edges.erase(Edges.begin() + i);
-			cout << "DELETED: EDGE " << start << "-" << end << endl;
+			cout << red << "DELETED" << def << ": EDGE " << start << "-" << end << endl;
 		}
 		if (!Edges.empty())
 		{
 			if (Edges.at(i).start == end && Edges.at(i).end == start)
 			{
 				Edges.erase(Edges.begin() + i);
-				cout << "DELETED: EDGE " << end << "-" << start << endl;
+				cout << red << "DELETED" << def << ": EDGE " << end << "-" << start << endl;
 				i -= 1;
 			}
 		}
@@ -541,22 +546,22 @@ void parseFile(string fileName)
 	}
 	else if (!fileExists(fileName)) // Error for non-existant file
 	{
-		cout << "\a*** ERROR *** FILE NOT FOUND: " << fileName << endl;
+		cout << red << "\a*** ERROR *** FILE NOT FOUND: " << def << fileName << endl;
 		if (!verifyExtension(fileName))
 		{
 			if (getExtension(fileName) != "NO FILE")
-				cout << "              CHECK FILE EXTENSION" << endl;
+				cout << blue << "              CHECK FILE EXTENSION" << def << endl;
 			else
-				cout << "              NO FILE IN PATH" << endl;
+				cout << blue << "              NO FILE IN PATH" << def << endl;
 		}
 		NEWLINE
 	}
 	else if (!verifyExtension(fileName)) // Error for bad extension or no file in path
 	{
 		if (getExtension(fileName) != "NO FILE")
-			cout << "\a*** ERROR *** INCORRECT FILE EXTENSION: " << getExtension(fileName) << endl;
+			cout << red << "\a*** ERROR *** INCORRECT FILE EXTENSION: " << def << getExtension(fileName) << endl;
 		else
-			cout << "\a*** ERROR *** NO FILE IN PATH: " << fileName << endl;
+			cout << red << "\a*** ERROR *** NO FILE IN PATH: " << def << fileName << endl;
 		NEWLINE
 	}
 }
@@ -565,11 +570,6 @@ void parseFile(string fileName)
 #pragma region Help Function
 void printHelp()
 {
-	Color::Modifier red(Color::FG_RED);
-	Color::Modifier green(Color::FG_GREEN);
-	Color::Modifier blue(Color::FG_BLUE);
-	Color::Modifier def(Color::FG_DEFAULT);
-
 	NEWLINE
 		cout << left << setw(60) << setfill('_') << "Nodes" << endl;
 		cout << blue << "Adding a node to the program:" << endl;
