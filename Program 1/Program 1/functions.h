@@ -44,8 +44,10 @@ public:
 #pragma endregion
 
 #pragma region Text Color
-namespace Color {
-	enum Code {
+namespace Color 
+{
+	enum Code 
+	{
 		FG_RED = 31,
 		FG_GREEN = 32,
 		FG_BLUE = 34,
@@ -55,14 +57,17 @@ namespace Color {
 		BG_BLUE = 44,
 		BG_DEFAULT = 49
 	};
-	class Modifier {
+	class Modifier 
+	{
 		Code code;
 	public:
 		Modifier(Code pCode) : code(pCode) {}
 		friend std::ostream&
-			operator<<(std::ostream& os, const Modifier& mod) {
-			return os << "\033[" << mod.code << "m";
-		}
+			operator<<(std::ostream& os, const Modifier& mod) 
+			{
+				return os << "\033[" << mod.code << "m";
+			};
+
 	};
 }
 #pragma endregion

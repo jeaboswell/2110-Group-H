@@ -10,10 +10,17 @@ extern vector<Node> Nodes;
 extern vector<Edge> Edges;
 locale loc;
 
+#ifdef __linux
 Color::Modifier red(Color::FG_RED);
 Color::Modifier green(Color::FG_GREEN);
 Color::Modifier blue(Color::FG_BLUE);
 Color::Modifier def(Color::FG_DEFAULT);
+#elif _WIN32
+#define red ""
+#define green  ""
+#define blue  ""
+#define def  ""
+#endif
 #pragma endregion
 
 #pragma region Constructors
@@ -328,6 +335,7 @@ void nodeDelete(string name)
 					{
 						cout << blue << "    EDGE AUTO-REMOVED BY NODE DELETION: " << def << Edges.at(j).start << "-" << Edges.at(j).end << endl;
 						Edges.erase(Edges.begin() + j);
+						j -= 1;
 					}
 				}
 			}
