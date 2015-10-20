@@ -1,0 +1,24 @@
+Kruskal's Algorithm Process
+
+1) Create a new list of edges that is a copy of the current list of edges.
+
+2) Sort the new list:
+    i) Look for and remove any loops (A-A)
+    ii) Remove duplicate edges:
+        * For edge A-B, there is also B-A. Remove B-A.
+    iii) Order remaining edges from least to greatest.
+
+3) Create a new list for the minimum spanning tree (MST)
+
+4) Add the smallest edge in sotrted list to the MST and then remove it from sorted list.
+
+5) Repeat step 4.
+
+6) While the number of edges in MST does not equal the number of nodes - 1:
+    i) Look at the smallest edge in sorted list.
+    ii) Check if adding it causes a loop. (See Loop Check Process)
+    iii) If it does not cause a loop, add it to the MST.
+    iv) Remove the edge from sorted list.
+    
+7) Add duplicate edges back into MST. Reverse step 2(ii).
+    * This allows for proper printing
