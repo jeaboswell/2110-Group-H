@@ -1,0 +1,11 @@
+Loop Check Process (In regards to an edge)
+
+1) Look for the start node of the edge in the MST. If it is not found, no loop will be created. If it is found, continue.
+
+2) Look for the end node of the edge in the MST. If it is not found, no loop will be created. If it is found, continue.
+
+3) Find all nodes connected to the start and end nodes of the edge, creating lists for each tree. (Recursive Function)
+    * ONLY ADD NODES TO THE TREE IF THEY DO NOT ALREADY EXIST IN THE TREE.
+    
+4) Look for any node matches between the start and end node trees. If a match is found, a loop will be created, so don't add
+   edge to the MST. If no match is found, no loop wil be created, so add the edge to the MST.
