@@ -8,9 +8,10 @@ using namespace std;
 
 #define vstring vector<string>
 #define vedge vector<Edge>
+#define vnode vector<Node>
 
-extern vector<Node> Nodes;
-extern vector<Edge> Edges;
+extern vnode Nodes;
+extern vedge Edges;
 locale loc;
 bool allowKruskal = true;
 
@@ -61,7 +62,7 @@ string prompt()
 }
 
 // Split command string into substrings
-vector<string> split(string input)
+vstring split(string input)
 {
 	string temp;
 	for (unsigned int i = 0; i < input.length(); i++) // Convert input into all upper case
@@ -69,7 +70,7 @@ vector<string> split(string input)
 	istringstream buf(temp);
 	istream_iterator<string> beg(buf), end;
 
-	vector<string> output(beg, end);
+	vstring output(beg, end);
 
 	return output;
 }
@@ -80,7 +81,7 @@ string getFIlePath(string input)
 	istringstream buf(input);
 	istream_iterator<string> beg(buf), end;
 
-	vector<string> output(beg, end);
+	vstring output(beg, end);
 
 	if (output.size() > 1)
 		return output.at(1);
@@ -91,24 +92,24 @@ string getFIlePath(string input)
 // Execute command entered by user
 bool runCommand(string command)
 {
-#pragma region Variables
+	#pragma region Variables
 	bool quit = false;
 	string filePath;
-	vector<string> splitCommands;
-#pragma endregion
+	vstring splitCommands;
+	#pragma endregion
 
 	filePath = getFIlePath(command); // Get file path
 	splitCommands = split(command); // Get command substrings
 
-#pragma region No Input Error Check
+	#pragma region No Input Error Check
 	if (splitCommands.empty() == true)
 	{
 		cout << red << "\a*** ERROR *** NO COMMAND ENTERED" << endl << def;
 		NEWLINE
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Node Handling
+	#pragma region Node Handling
 	else if (splitCommands.front() == "NODE")
 	{
 		if (splitCommands.size() < 3) // Verify parameter count
@@ -151,9 +152,9 @@ bool runCommand(string command)
 			NEWLINE
 		}
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Edge Handling
+	#pragma region Edge Handling
 	else if (splitCommands.front() == "EDGE")
 	{
 		if (splitCommands.size() < 4) // Verify parameter count
@@ -203,9 +204,9 @@ bool runCommand(string command)
 			NEWLINE
 		}
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Kruskal Handling
+	#pragma region Kruskal Handling
 	else if (splitCommands.front() == "KRUSKAL")
 	{
 		if (splitCommands.size() > 1) // Verify parameter count
@@ -218,9 +219,9 @@ bool runCommand(string command)
 			printKruskal();
 		NEWLINE
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Route Handling
+	#pragma region Route Handling
 	else if (splitCommands.front() == "ROUTE")
 	{
 		if (splitCommands.size() < 3)
@@ -259,9 +260,9 @@ bool runCommand(string command)
 			route(splitCommands.at(1), splitCommands.at(2));
 		}
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Print Handling
+	#pragma region Print Handling
 	else if (splitCommands.front() == "PRINT")
 	{
 		if (splitCommands.size() < 2) // Verify parameter count
@@ -300,9 +301,9 @@ bool runCommand(string command)
 			NEWLINE
 		}
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region CSV File Handling
+	#pragma region CSV File Handling
 	else if (splitCommands.front() == "FILE")
 	{
 		if (splitCommands.size() < 2) // Verify parameter count
@@ -318,38 +319,38 @@ bool runCommand(string command)
 		else // Execute commands from CSV file
 			parseFile(filePath);
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Clear Screen
+	#pragma region Clear Screen
 	else if (splitCommands.front() == "CLEAR")
 		CLEAR
-#pragma endregion
+	#pragma endregion
 
-#pragma region List Contents of current folder
+	#pragma region List Contents of current folder
 	else if (splitCommands.front() == "LS")
 	{
 		system("ls");
 		NEWLINE
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Help Page
+	#pragma region Help Page
 	else if (splitCommands.front() == "HELP")
 		printHelp();
-#pragma endregion
+	#pragma endregion
 
-#pragma region Quit
+	#pragma region Quit
 	else if (splitCommands.front() == "QUIT")
 		quit = true;
-#pragma endregion
+	#pragma endregion
 
-#pragma region Error Check First Command
+	#pragma region Error Check First Command
 	else
 	{
 		cout << red << "\a*** ERROR *** COMMAND NOT RECOGNIZED: " << def << splitCommands.front() << endl;
 		NEWLINE
 	}
-#pragma endregion
+	#pragma endregion
 
 	return quit;
 }
@@ -521,16 +522,16 @@ Edge getEdge(string a, string b)
 #pragma endregion
 
 #pragma region Kruskal Functions
-vector<Edge> kruskalAlgorithm()
+vedge kruskalAlgorithm()
 {
-#pragma region Variables
-	vector<Edge> sortedEdges;
-	vector<Edge> kruskals;
-	vector<string> kruskalNodes;
+	#pragma region Variables
+	vedge sortedEdges;
+	vedge kruskals;
+	vstring kruskalNodes;
 	sortedEdges = Edges;
-#pragma endregion
+	#pragma endregion
 
-#pragma region Sort edges
+	#pragma region Sort edges
 	// Remove loops and duplicate edges
 	for (unsigned int i = 0; i < sortedEdges.size(); i++)
 	{
@@ -548,9 +549,9 @@ vector<Edge> kruskalAlgorithm()
 
 	// Sort edges by distance, least to greatest
 	sort(sortedEdges.begin(), sortedEdges.end(), edgeDistanceCompare);
-#pragma endregion
+	#pragma endregion
 
-#pragma region Add edges to MST
+	#pragma region Add edges to MST
 	// Add smallest edge to kruskals list and remove from sorted list
 	kruskals.push_back(sortedEdges.front());
 	updateKruskalNodes(sortedEdges.front(), &kruskalNodes);
@@ -581,7 +582,7 @@ vector<Edge> kruskalAlgorithm()
 			}
 		}
 	}
-#pragma endregion
+	#pragma endregion
 
 	// Add duplicate edges previously removed for printing ease
 	undirectKruskal(&kruskals);
@@ -599,7 +600,7 @@ bool edgeDistanceCompare(Edge a, Edge b)
 }
 
 // Check current edge against current nodes in kruskals for loop
-bool loopExist(Edge a, vector<string> nodeList, vector<Edge> kruskal)
+bool loopExist(Edge a, vstring nodeList, vedge kruskal)
 {
 	for (unsigned int i = 0; i < nodeList.size(); i++)
 	{
@@ -609,7 +610,7 @@ bool loopExist(Edge a, vector<string> nodeList, vector<Edge> kruskal)
 			{
 				if (a.end == nodeList.at(j)) // Check for end node in MST
 				{
-					vector<string> startTree, endTree;
+					vstring startTree, endTree;
 
 					// Add all nodes linked to start and end nodes of current edge
 					connectedNodes(a.start, &startTree, kruskal);
@@ -632,7 +633,7 @@ bool loopExist(Edge a, vector<string> nodeList, vector<Edge> kruskal)
 }
 
 // Find all nodes connected to a single node
-void connectedNodes(string node, vector<string> *list, vector<Edge> kruskal)
+void connectedNodes(string node, vstring *list, vedge kruskal)
 {
 	for (unsigned int k = 0; k < kruskal.size(); k++)
 	{
@@ -674,7 +675,7 @@ void connectedNodes(string node, vector<string> *list, vector<Edge> kruskal)
 }
 
 // Update the nodes currently in the kruskal tree
-void updateKruskalNodes(Edge edge, vector<string> *list)
+void updateKruskalNodes(Edge edge, vstring *list)
 {
 	bool startExist = false;
 	bool endExist = false;
@@ -692,7 +693,7 @@ void updateKruskalNodes(Edge edge, vector<string> *list)
 }
 
 // Replace all removed duplicate edges when edges was sorted
-void undirectKruskal(vector<Edge> *list)
+void undirectKruskal(vedge *list)
 {
 	unsigned int size = list->size();
 	for (unsigned int i = 0; i < size; i++)
@@ -705,9 +706,9 @@ void undirectKruskal(vector<Edge> *list)
 void printKruskal()
 {
 	// Perform Kruskal's Algorithm
-	vector<Edge> kruskal = kruskalAlgorithm();
+	vedge kruskal = kruskalAlgorithm();
 	// Alphabatize nodes temporarily
-	vector<Node> alphabetical;
+	vnode alphabetical;
 	alphabetical = Nodes;
 	sort(alphabetical.begin(), alphabetical.end(), nodeCompare);
 
@@ -741,7 +742,7 @@ void printKruskal()
 	}
 }
 
-bool edgeExists(string start, string end, vector<Edge> list)
+bool edgeExists(string start, string end, vedge list)
 {
 	if (!list.empty())
 	{
@@ -760,7 +761,7 @@ vstring visited;
 vector<Vertex> nodeCost;
 void route(string a, string b)
 {
-	vector<Edge> dijkstra, path;
+	vedge dijkstra, path;
 	iniVertices(a);
 	dijkstraAlgorithm(a, &dijkstra);
 	visited.clear();
@@ -770,7 +771,7 @@ void route(string a, string b)
 	printShortestPath(getOutput(path));
 }
 
-void dijkstraAlgorithm(string source, vector<Edge> *dijkstra)
+void dijkstraAlgorithm(string source, vedge *dijkstra)
 {
 	if (source == "")
 		return;
@@ -847,7 +848,7 @@ void iniVertices(string source)
 
 vstring adjacentNodes(string node)
 {
-	vector<string> adjList;
+	vstring adjList;
 	for (unsigned int i = 0; i < Edges.size(); i++)
 	{
 		if (Edges.at(i).start == node)
@@ -856,9 +857,9 @@ vstring adjacentNodes(string node)
 	return adjList;
 }
 
-vstring adjacentNodes(string node, vector<Edge>dijkstra)
+vstring adjacentNodes(string node, vedge dijkstra)
 {
-	vector<string> adjList;
+	vstring adjList;
 	for (unsigned int i = 0; i < dijkstra.size(); i++)
 	{
 		if (dijkstra.at(i).start == node)
@@ -877,7 +878,7 @@ bool checkVisited(string a)
 	return false;
 }
 
-void shortestPath(string start, string end, vector<Edge> list, vector<Edge> *returnList)
+void shortestPath(string start, string end, vedge list, vedge *returnList)
 {
 	for (unsigned int j = 0; j < list.size(); j++)
 	{
@@ -890,9 +891,9 @@ void shortestPath(string start, string end, vector<Edge> list, vector<Edge> *ret
 	}
 }
 
-void reversePath(vector<Edge> *path)
+void reversePath(vedge *path)
 {
-	vector<Edge> copy = *path, returnPath;
+	vedge copy = *path, returnPath;
 
 	unsigned int size = copy.size();
 	for (unsigned int i = 0; i < size; i++)
@@ -904,7 +905,7 @@ void reversePath(vector<Edge> *path)
 	*path = returnPath;
 }
 
-string getOutput(vector<Edge> path)
+string getOutput(vedge path)
 {
 	vstring temp;
 	double totalDistance = 0;
@@ -962,7 +963,7 @@ void printShortestPath(string s)
 void printMatrix()
 {
 	// Alphabatize nodes temporarily
-	vector<Node> alphabetical;
+	vnode alphabetical;
 	alphabetical = Nodes;
 	sort(alphabetical.begin(), alphabetical.end(), nodeCompare);
 
@@ -973,7 +974,7 @@ void printMatrix()
 		cout << left << blue << setw(getW().second + 1) << alphabetical.at(i).name << def << flush;
 	NEWLINE
 
-		unsigned int nameLength = 0, distLength = 0;
+	unsigned int nameLength = 0, distLength = 0;
 	for (unsigned int i = 0; i < alphabetical.size(); i++)
 	{
 		for (unsigned int j = 0; j < alphabetical.size(); j++)
@@ -1008,7 +1009,7 @@ void printMatrix()
 void printList()
 {
 	// Alphabatize nodes temporarily
-	vector<Node> alphabetical;
+	vnode alphabetical;
 	alphabetical = Nodes;
 	sort(alphabetical.begin(), alphabetical.end(), nodeCompare);
 
@@ -1045,7 +1046,7 @@ void printList()
 void printEdges()
 {
 	// Alphabatize edges temporarily
-	vector<Edge> alphabetical;
+	vedge alphabetical;
 	alphabetical = Edges;
 	sort(alphabetical.begin(), alphabetical.end(), edgeNameCompare);
 
@@ -1222,47 +1223,51 @@ void printHelp()
 {
 	CLEAR
 		cout << left << setw(58) << setfill('_') << "Nodes" << endl;
-	cout << blue << "Adding a node to the program:" << endl;
-	cout << green << "\tnode add <NAME>" << endl;
-	cout << blue << "Deleting a node from the program:" << endl;
-	cout << green << "\tnode delete <NAME>" << endl;
-	cout << blue << "Searching the program for an existing node:" << endl;
-	cout << green << "\tnode search <NAME>" << endl;
+		cout << blue << "Adding a node to the program:" << endl;
+		cout << green << "\tnode add <NAME>" << endl;
+		cout << blue << "Deleting a node from the program:" << endl;
+		cout << green << "\tnode delete <NAME>" << endl;
+		cout << blue << "Searching the program for an existing node:" << endl;
+		cout << green << "\tnode search <NAME>" << endl;
 	NEWLINE
 		cout << def << left << setw(58) << "Edges" << endl;
-	cout << blue << "Adding an edge to the program:" << endl;
-	cout << green << "\tedge add <START NODE> <END NODE> <NAME> <DISTANCE>" << endl;
-	cout << blue << "Deleting an edge from the program:" << endl;
-	cout << green << "\tedge delete <START NODE> <END NODE>" << endl;
+		cout << blue << "Adding an edge to the program:" << endl;
+		cout << green << "\tedge add <START NODE> <END NODE> <NAME> <DISTANCE>" << endl;
+		cout << blue << "Deleting an edge from the program:" << endl;
+		cout << green << "\tedge delete <START NODE> <END NODE>" << endl;
 	NEWLINE
 		cout << def << left << setw(58) << "Minimum Spanning Tree" << endl;
-	cout << blue << "Print the adjacency list for MST:" << endl;
-	cout << green << "\tkruskal" << endl;
+		cout << blue << "Print the adjacency list for MST:" << endl;
+		cout << green << "\tkruskal" << endl;
+	NEWLINE
+		cout << def << left << setw(58) << "Shortest Path" << endl;
+		cout << blue << "Print the shortest path between two nodes:" << endl;
+		cout << green << "\troute <START NODE> <END NODE>" << endl;
 	NEWLINE
 		cout << def << left << setw(58) << "Printing" << endl;
-	cout << blue << "Print the adjacency matrix:" << endl;
-	cout << green << "\tprint matrix" << endl;
-	cout << blue << "Print the adjacency list:" << endl;
-	cout << green << "\tprint list" << endl;
-	cout << blue << "Print a list of all edges:" << endl;
-	cout << green << "\tprint edges" << endl;
+		cout << blue << "Print the adjacency matrix:" << endl;
+		cout << green << "\tprint matrix" << endl;
+		cout << blue << "Print the adjacency list:" << endl;
+		cout << green << "\tprint list" << endl;
+		cout << blue << "Print a list of all edges:" << endl;
+		cout << green << "\tprint edges" << endl;
 	NEWLINE
 		cout << def << left << setw(58) << "Command File" << endl;
-	cout << blue << "Using a .csv file to execute commands:" << endl;
-	cout << green << "\tfile <FILE PATH>" << endl;
-	cout << def << "\tNote: The file path may" << red << " NOT " << def << "contain any spaces" << endl;
+		cout << blue << "Using a .csv file to execute commands:" << endl;
+		cout << green << "\tfile <FILE PATH>" << endl;
+		cout << def << "\tNote: The file path may" << red << " NOT " << def << "contain any spaces" << endl;
 	NEWLINE
 		cout << left << setw(58) << "Other Commands" << endl;
-	cout << blue << "Clear the screen:" << endl;
-	cout << green << "\tclear" << endl;
-	cout << blue << "List the contents of the program folder:" << endl;
-	cout << green << "\tls" << endl;
-	cout << blue << "Get a list of all commands:" << endl;
-	cout << green << "\thelp" << endl;
-	cout << blue << "Exit the program:" << endl;
-	cout << green << "\tquit" << endl << def;
+		cout << blue << "Clear the screen:" << endl;
+		cout << green << "\tclear" << endl;
+		cout << blue << "List the contents of the program folder:" << endl;
+		cout << green << "\tls" << endl;
+		cout << blue << "Get a list of all commands:" << endl;
+		cout << green << "\thelp" << endl;
+		cout << blue << "Exit the program:" << endl;
+		cout << green << "\tquit" << endl << def;
 	NEWLINE
-		KEYPRESS
-		CLEAR
+	KEYPRESS
+	CLEAR
 }
 #pragma endregion
