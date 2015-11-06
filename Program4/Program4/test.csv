@@ -23,12 +23,3 @@ edge,add,d,e,s13,9
 edge,add,f,e,s14,10
 kruskal,,,,,
 route,a,e,,,
-node,delete,a,,,
-node,delete,b,,,
-node,delete,c,,,
-node,delete,d,,,
-node,delete,e,,,
-node,delete,f,,,
-node,delete,g,,,
-node,delete,h,,,
-node,delete,i,,,

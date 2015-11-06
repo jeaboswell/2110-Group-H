@@ -339,6 +339,16 @@ bool runCommand(string command)
 		printHelp();
 	#pragma endregion
 
+	#pragma region Clear Data
+	else if (splitCommands.front() == "CLEAN")
+	{
+		NEWLINE
+			cout << red << "\a\tAre you sure you want to remove all program data? (y/n): " << flush;
+		Nodes.clear();
+		Edges.clear();
+	}
+	#pragma endregion
+
 	#pragma region Quit
 	else if (splitCommands.front() == "QUIT")
 		quit = true;
@@ -980,7 +990,7 @@ void printMatrix()
 		for (unsigned int j = 0; j < alphabetical.size(); j++)
 		{
 			if (nameLength < getEdge(alphabetical.at(i).name, alphabetical.at(j).name).name.length())
-				nameLength = getEdge(alphabetical.at(i).name, alphabetical.at(j).name).name.length();
+				nameLength = getEdge(alphabetical.at(i).name, alphabetical.at(j).name).name.length() - 1;
 
 			if (distLength < dtos(getEdge(alphabetical.at(i).name, alphabetical.at(j).name).distance).length())
 				distLength = dtos(getEdge(alphabetical.at(i).name, alphabetical.at(j).name).distance).length();
@@ -1076,7 +1086,7 @@ bool edgeNameCompare(Edge a, Edge b)
 
 pair<int, int> getW()
 {
-	unsigned int city = 0, edge = 0;
+	unsigned int city = 1, edge = 1;
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 		if (city < Nodes.at(i).name.length())
@@ -1258,6 +1268,8 @@ void printHelp()
 		cout << def << "\tNote: The file path may" << red << " NOT " << def << "contain any spaces" << endl;
 	NEWLINE
 		cout << left << setw(58) << "Other Commands" << endl;
+		cout << blue << "Remove all current data:" << endl;
+		cout << green << "\tclean" << endl;
 		cout << blue << "Clear the screen:" << endl;
 		cout << green << "\tclear" << endl;
 		cout << blue << "List the contents of the program folder:" << endl;
