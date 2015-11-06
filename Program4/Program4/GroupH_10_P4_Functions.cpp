@@ -399,8 +399,9 @@ void nodeDelete(string name)
 						{
 							cout << blue << "    EDGE AUTO-REMOVED BY NODE DELETION: " << def << Edges.at(j).start << "-" << Edges.at(j).end << endl;
 							Edges.erase(Edges.begin() + j);
+							j -= 1;
 						}
-						if (!Edges.empty())
+						if (!Edges.empty() && j != Edges.size())
 						{
 							if (Edges.at(j).end == name)
 							{
