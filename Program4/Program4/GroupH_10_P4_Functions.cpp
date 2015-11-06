@@ -391,7 +391,7 @@ void nodeDelete(string name)
 			cout << red << "DELETED" << def << ": NODE " << name << endl;
 			if (!Edges.empty())
 			{
-				for (unsigned int j = 0; j < Edges.size(); j++) // Look for edges containing node
+				for (int j = 0; j < Edges.size(); j++) // Look for edges containing node
 				{
 					if (Edges.at(j).start != Edges.at(j).end) // Edge does not start and end at same node
 					{
@@ -399,11 +399,10 @@ void nodeDelete(string name)
 						{
 							cout << blue << "    EDGE AUTO-REMOVED BY NODE DELETION: " << def << Edges.at(j).start << "-" << Edges.at(j).end << endl;
 							Edges.erase(Edges.begin() + j);
-							j -= 1;
 						}
 						if (!Edges.empty() && j != Edges.size())
 						{
-							if (Edges.at(j).end == name)
+							if (Edges.at(j).end == name || Edges.at(j).start == name)
 							{
 								cout << blue << "    EDGE AUTO-REMOVED BY NODE DELETION: " << def << Edges.at(j).start << "-" << Edges.at(j).end << endl;
 								Edges.erase(Edges.begin() + j);
