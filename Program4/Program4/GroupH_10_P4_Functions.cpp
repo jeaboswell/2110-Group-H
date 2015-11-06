@@ -343,9 +343,35 @@ bool runCommand(string command)
 	else if (splitCommands.front() == "CLEAN")
 	{
 		NEWLINE
-			cout << red << "\a\tAre you sure you want to remove all program data? (y/n): " << flush;
-		Nodes.clear();
-		Edges.clear();
+		cout << "\a\tAre you sure you want to " << red << "delete" << def << " all program data? (y/n): " << flush;
+		string response;
+		bool run = true;
+		while (run)
+		{
+			getline(cin, response);
+			NEWLINE
+			string temp;
+			for (unsigned int i = 0; i < response.length(); i++)
+				temp += toupper(response[i], loc);
+			if (temp == "Y" || temp == "YES")
+			{
+				Nodes.clear();
+				Edges.clear();
+				cout << "All data deleted successfully" << endl;
+				run = false;
+			}
+			else if (temp == "N" || temp == "NO")
+			{
+				cout << "Cleaning canceled" << endl;
+				run = false;
+			}
+			else
+			{
+				cout << red << "\a*** ERROR *** INVALID RESPONSE" << def << endl;
+				NEWLINE
+				cout << "\a\tAre you sure you want to " << red << "delete" << def << " all program data? (y/n): " << flush;
+			}
+		}
 	}
 	#pragma endregion
 
@@ -1268,7 +1294,7 @@ void printHelp()
 		cout << def << "\tNote: The file path may" << red << " NOT " << def << "contain any spaces" << endl;
 	NEWLINE
 		cout << left << setw(58) << "Other Commands" << endl;
-		cout << blue << "Remove all current data:" << endl;
+		cout << blue << "Delete all current data:" << endl;
 		cout << green << "\tclean" << endl;
 		cout << blue << "Clear the screen:" << endl;
 		cout << green << "\tclear" << endl;
