@@ -1,0 +1,8 @@
+node,add,a,,,
+node,add,b,,,
+node,add,c,,,
+node,add,d,,,
+edge,add,a,d,s1,99999
+edge,add,a,b,s2,10
+edge,add,b,d,s3,10
+route,a,d,,,

@@ -812,7 +812,7 @@ void dijkstraAlgorithm(string source, vedge *dijkstra)
 			{
 				if (nodeCost.at(j).name == Nodes.at(i).name)
 				{
-					if (nodeCost.at(j).weight <= minDist)
+					if (nodeCost.at(j).weight < minDist)
 					{
 						minDist = nodeCost.at(j).weight;
 						minName = Nodes.at(i).name;
