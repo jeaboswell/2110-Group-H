@@ -116,6 +116,8 @@ void shortestPath(string, string, vector<Edge>, vector<Edge>*);
 void reversePath(vector<Edge>*);
 string getOutput(vector<Edge>);
 void printShortestPath(string);
+bool isConnected(string, string);
+void shortestConnections(string, vector<string>*);
 void printMatrix();
 void printList();
 void printEdges();

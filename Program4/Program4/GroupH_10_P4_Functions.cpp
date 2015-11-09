@@ -676,7 +676,7 @@ void connectedNodes(string node, vstring *list, vedge kruskal)
 		// If passed node is the start of an edge
 		if (kruskal.at(k).start == node)
 		{
-			bool create = true;
+			bool create = true, add = true;
 			for (unsigned int i = 0; i < list->size(); i++)
 			{
 				// Check if the counterpoint of start node is already in list
@@ -797,14 +797,19 @@ vstring visited;
 vector<Vertex> nodeCost;
 void route(string a, string b)
 {
-	vedge dijkstra, path;
-	iniVertices(a);
-	dijkstraAlgorithm(a, &dijkstra);
-	visited.clear();
-	nodeCost.clear();
-	shortestPath(a, b, dijkstra, &path);
-	reversePath(&path);
-	printShortestPath(getOutput(path));
+	if (isConnected(a, b))
+	{
+		vedge dijkstra, path;
+		iniVertices(a);
+		dijkstraAlgorithm(a, &dijkstra);
+		visited.clear();
+		nodeCost.clear();
+		shortestPath(a, b, dijkstra, &path);
+		reversePath(&path);
+		printShortestPath(getOutput(path));
+	}
+	else
+		cout << red << "\a*** ERROR *** NO PATHS EXIST BETWEEN THOSE NODES" << def << endl << endl;
 }
 
 void dijkstraAlgorithm(string source, vedge *dijkstra)
@@ -962,7 +967,7 @@ string getOutput(vedge path)
 		stringstream s;
 		stringstream nodes;
 		nodes << path.at(i).start << "-" << path.at(i).end;
-		s << "     " << setw(maxNodeLength) << left << nodes.str() << " Name: " << setw(maxStreetLength) << left << path.at(i).name << " Distance: " << setw(maxDistLength) << right << path.at(i).distance;
+		s << "       " << setw(maxNodeLength) << left << nodes.str() << " Name: " << setw(maxStreetLength) << left << path.at(i).name << " Distance: " << setw(maxDistLength) << right << path.at(i).distance;
 		totalDistance += path.at(i).distance;
 		if (width < s.str().length())
 			width = s.str().length();
@@ -980,7 +985,7 @@ string getOutput(vedge path)
 			output << setw(width) << setfill('-') << "" << setfill(' ') << endl;
 			stringstream totalDistanceString;
 			totalDistanceString << "Total Distance: " << totalDistance;
-			output << green << "End: " << def << path.at(i).end << setw(width - (5 + path.at(i).end.length())) << right << totalDistanceString.str() << endl;
+			output << green << "  End: " << def << path.at(i).end << setw(width - (7 + path.at(i).end.length())) << right << totalDistanceString.str() << endl;
 		}
 	}
 	return output.str();
@@ -991,6 +996,45 @@ void printShortestPath(string s)
 	NEWLINE
 		cout << s;
 	NEWLINE
+}
+
+bool isConnected(string a, string b)
+{
+	vstring connections;
+
+	shortestConnections(a, &connections);
+	
+	for (unsigned int i = 0; i < connections.size(); i++)
+	{
+		if (connections.at(i) == b)
+			return true;
+	}
+	return false;
+}
+
+void shortestConnections(string node, vstring *list)
+{
+	for (unsigned int k = 0; k < Edges.size(); k++)
+	{
+		// If passed node is the start of an edge
+		if (Edges.at(k).start == node)
+		{
+			bool cont = true, add = true;
+			for (unsigned int i = 0; i < list->size(); i++)
+			{
+				// Check if the counterpoint of start node is already in list
+				if (list->at(i) == Edges.at(k).end)
+					cont = false;
+				if (list->at(i) == node)
+					add = false;
+			}
+			// If counter point is not in list, add node to list and look for it's connected nodes
+			if (add)
+				list->push_back(node);
+			if (cont)
+				shortestConnections(Edges.at(k).end, list);
+		}
+	}
 }
 #pragma endregion
 

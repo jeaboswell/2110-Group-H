@@ -2,7 +2,13 @@
 CSCE 2110.001
 Group H
 	Jesse Boswell
-
+	Craig Nafus
+	Christian Betancourt
+	Daniel Lee
+	Taylor DeLaughter
+	Satvir Singh
+	Ameera Fatima
+	Nancy Joy
 */
 
 #pragma region Includes/Globals
