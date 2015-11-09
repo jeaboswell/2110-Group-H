@@ -2,6 +2,8 @@
 CSCE 2110.001
 Group H
 	Jesse Boswell
+	Craig Nafus
+	
 
 */
 
