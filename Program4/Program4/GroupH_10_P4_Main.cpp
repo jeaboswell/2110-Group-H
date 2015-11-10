@@ -21,19 +21,19 @@ vector<Edge> Edges;
 
 int main()
 {
-#pragma region Variables
+	#pragma region Variables
 	string command;
 	bool quit = false;
-#pragma endregion
+	#pragma endregion
 
 	CLEAR
 
-		while (quit == false)
-		{
-			command = prompt();
-			quit = runCommand(command);
-		}
+	while (quit == false)
+	{
+		command = prompt();
+		quit = runCommand(command);
+	}
 
 	CLEAR
-		return 0;
+	return 0;
 }
