@@ -222,7 +222,7 @@ bool runCommand(string command)
 	#pragma endregion
 
 	#pragma region Route Handling
-	else if (splitCommands.front() == "ROUTE")
+	else if (splitCommands.front() == "DISTANCE")
 	{
 		if (splitCommands.size() < 3)
 		{
@@ -798,60 +798,45 @@ vstring visited;
 vector<Vertex> nodeCost;
 #pragma endregion
 
-// Route functions handler
+// Route path handler
 void route(string a, string b)
 {
-	if (isConnected(a, b))	// Make sure the start and end nodes have a connection
+	if (isConnected(a, b))
 	{
-		// Create Variables
 		vedge dijkstra, path;
-		// Initialize Variables
 		iniVertices(a);
-		// Run Dijkstras algorithm
 		dijkstraAlgorithm(a, &dijkstra);
-		// Get the shorest path
 		shortestPath(a, b, dijkstra, &path);
-		// Reverse the path provided by shortestPath
 		reversePath(&path);
-		// Print the shorest path
 		printShortestPath(getOutput(path));
 	}
 	else
 		cout << red << "\a*** ERROR *** NO PATHS EXIST BETWEEN THOSE NODES" << def << endl << endl;
 }
 
-// Run dijkstras algorithm to find the shortest path
+// Run Dijkstra's Algorithm
 void dijkstraAlgorithm(string source, vedge *dijkstra)
 {
-	// Make sure passed source node is not blank
 	if (source == "")
 		return;
-
-	// Get nodes adjacent to the source node
 	vstring adjSource = adjacentNodes(source);
-	// Add the source node to the visited list
 	visited.push_back(source);
 
 	for (unsigned int i = 0; i < Edges.size(); i++)
 	{
 		for (unsigned int j = 0; j < adjSource.size(); j++)
 		{
-			// Find source node in edges list as the start of an edge and make sure the end node is in the adjNodes list
-			if (Edges.at(i).start == source && Edges.at(i).end == adjSource.at(j)) 
+			if (Edges.at(i).start == source && Edges.at(i).end == adjSource.at(j))
 			{
 				for (unsigned int k = 0; k < nodeCost.size(); k++)
 				{
-					// Find the source node in the nodeCost list
 					if (nodeCost.at(k).name == source)
 					{
 						for (unsigned int l = 0; l < nodeCost.size(); l++)
 						{
-							// Find the adjacent node in the nodeCost list and check if it's current weight is greater that the edge it terminates plus the weight of the start of the edge it terminates
-							if (nodeCost.at(l).name == adjSource.at(j) && nodeCost.at(l).weight > (Edges.at(i).distance + nodeCost.at(k).weight))
+							if (nodeCost.at(l).name == adjSource.at(j) && nodeCost.at(l).weight >(Edges.at(i).distance + nodeCost.at(k).weight))
 							{
-								// If its weight is greater, update it's weight
 								nodeCost.at(l).weight = Edges.at(i).distance + nodeCost.at(k).weight;
-								// Add the current edge to the path that creates the shortest path
 								nodeCost.at(l).path.push_back(Edges.at(i));
 							}
 						}
@@ -861,8 +846,8 @@ void dijkstraAlgorithm(string source, vedge *dijkstra)
 		}
 	}
 
-	string minName; // Node with the shortest path
-	double minDist = (double)INT_MAX; // Minimum distance found in current run to get shortest path
+	string minName;
+	double minDist = (double)INT_MAX;
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 		if (!checkVisited(Nodes.at(i).name))
@@ -888,12 +873,11 @@ void dijkstraAlgorithm(string source, vedge *dijkstra)
 	dijkstraAlgorithm(minName, dijkstra);
 }
 
+// Initialize global variables for route
 void iniVertices(string source)
 {
-	// Clear visited and nodeCost lists
 	visited.clear();
 	nodeCost.clear();
-
 	for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 		if (Nodes.at(i).name == source)
@@ -909,6 +893,7 @@ void iniVertices(string source)
 	}
 }
 
+// Find adjacent nodes to passed node in Edges
 vstring adjacentNodes(string node)
 {
 	vstring adjList;
@@ -920,6 +905,7 @@ vstring adjacentNodes(string node)
 	return adjList;
 }
 
+// Find adjacent nodes to passed node in passed list
 vstring adjacentNodes(string node, vedge dijkstra)
 {
 	vstring adjList;
@@ -931,6 +917,7 @@ vstring adjacentNodes(string node, vedge dijkstra)
 	return adjList;
 }
 
+// Check if passed node has already been visited
 bool checkVisited(string a)
 {
 	for (unsigned int i = 0; i < visited.size(); i++)
@@ -941,6 +928,7 @@ bool checkVisited(string a)
 	return false;
 }
 
+// Find the shortest path between the two nodes
 void shortestPath(string start, string end, vedge list, vedge *returnList)
 {
 	for (unsigned int j = 0; j < list.size(); j++)
@@ -954,6 +942,7 @@ void shortestPath(string start, string end, vedge list, vedge *returnList)
 	}
 }
 
+// Reverse the order of the edges
 void reversePath(vedge *path)
 {
 	vedge copy = *path, returnPath;
@@ -968,6 +957,7 @@ void reversePath(vedge *path)
 	*path = returnPath;
 }
 
+// Get the output to print
 string getOutput(vedge path)
 {
 	vstring temp;
@@ -1013,6 +1003,7 @@ string getOutput(vedge path)
 	return output.str();
 }
 
+// Print the output
 void printShortestPath(string s)
 {
 	NEWLINE
@@ -1020,6 +1011,7 @@ void printShortestPath(string s)
 	NEWLINE
 }
 
+// Make sure there is a connection between the start and end node
 bool isConnected(string a, string b)
 {
 	vstring connections;
@@ -1034,6 +1026,7 @@ bool isConnected(string a, string b)
 	return false;
 }
 
+// Find the shortest connection
 void shortestConnections(string node, vstring *list)
 {
 	for (unsigned int k = 0; k < Edges.size(); k++)
@@ -1344,7 +1337,7 @@ void printHelp()
 	NEWLINE
 		cout << def << left << setw(58) << "Shortest Path" << endl;
 		cout << blue << "Print the shortest path between two nodes:" << endl;
-		cout << green << "\troute <START NODE> <END NODE>" << endl;
+		cout << green << "\tdistance <START NODE> <END NODE>" << endl;
 	NEWLINE
 		cout << def << left << setw(58) << "Printing" << endl;
 		cout << blue << "Print the adjacency matrix:" << endl;
