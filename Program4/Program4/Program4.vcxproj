@@ -146,11 +146,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GroupH_10_P4_Functions.cpp" />
-    <ClCompile Include="GroupH_10_P4_Main.cpp" />
+    <ClCompile Include="BosJ_10_P4_Functions.cpp" />
+    <ClCompile Include="BosJ_10_P4_Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GroupH_10_P4_Header.h" />
+    <ClInclude Include="BosJ_10_P4_Header.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

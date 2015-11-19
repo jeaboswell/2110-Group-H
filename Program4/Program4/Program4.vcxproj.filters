@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GroupH_10_P4_Main.cpp">
+    <ClCompile Include="BosJ_10_P4_Functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GroupH_10_P4_Functions.cpp">
+    <ClCompile Include="BosJ_10_P4_Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GroupH_10_P4_Header.h">
+    <ClInclude Include="BosJ_10_P4_Header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
